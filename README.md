@@ -39,7 +39,7 @@ Estes são:
 ### Padrões comportamentais
 Os padrões comportamentais nos auxiliam a criar códigos que lidam com o comportamento de objetos,
 lidando com as responsabilidades destes e a relação que eles tem com outros objetos.
-1. Strategy
+1. [Strategy](strategy/README.md)
 2. Chain of Responsibility
 3. Template
 4. State
