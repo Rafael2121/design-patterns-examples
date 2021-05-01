@@ -1,5 +1,9 @@
 # Padrão Strategy
-O padrão Strategy é um padrão comportamental, ...
+O padrão Strategy é um padrão comportamental, onde você cria uma família de algoritmos que,
+mesmo em classes separadas contem 1 a N funções que são comuns entre si, e assim permitindo
+que elas sejam intercabíveis.
+
+ref: [Refactoring.guru](https://refactoring.guru/pt-br/design-patterns/strategy) e a vida.
 
 ## Contexto
 Vamos imaginar que você está para desenvolver uma funcionalidade que enviará diferentes e-mails para
@@ -120,7 +124,8 @@ Para aplicá-lo, nós extraimos da função de envio de email o parâmetro do no
 o colocamos em uma classe, assim, invés de ter vários condicionais para verificar qual template
 seria acionado, nós já recebemos o objeto dele, que é compreendido pela nossa função.
 
-####### TODO Contar mais especificamente sobre as classes estratégias
+
+##### MAS PORQUE???
 O strategy em si solicita que, você crie uma **classe contexto** que irá receber sua **classe
 estratégia** como parâmetro, e independente de qual essa seja, o contexto deverá conseguir
 executar a função "estretégia".
@@ -150,11 +155,11 @@ utilizando a API do Mandrill.
 
 Em cada situação que tinhamos que enviar o email, nós implementávamos **todos os passos** para 
 o envio do email:
-- Pegar o nome do template
-- Buscar os dados do cliente
-- Construção do dict para o envio
-- Check se o serviço do Mandrill estava online
-- Envio do email
+1. Pegar o nome do template
+2. Buscar os dados do cliente
+3. Construção do dict para o envio
+4. Check se o serviço do Mandrill estava online
+5. Envio do email
 
 Quando tinhamos 10 templates... era... aceitável ~~nem tanto~~, mas seguimos assim.
 
