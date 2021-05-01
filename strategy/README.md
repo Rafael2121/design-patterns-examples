@@ -59,7 +59,7 @@ E existem muitas outras situações que você tera que enviar email. Imagine iss
 tipos de condições/templates.
 
 - Será que cada vez que eu tiver um template novo eu vou precisar alterar esta função?
-- E se um nome do template mudar, eu vou precisar alterar nessa função?
+- E se um nome do template mudar, eu vou precisar alterar essa função?
 - Ela vai crescer infinitamente para cada template que eu tiver?
 - Minha função precisa MESMO saber o nome do template, de forma explícita?
 
@@ -77,7 +77,7 @@ futuramente.
 
 Então, devemos fazer com que possamos implementar templates novos, sendo que este deva ser mapeado
 facilmente e que não fique completamente exposto a função, e que principalmente, não precisemos
-alterar coisas que já funcionam. Além disso
+alterar coisas que já funcionam.
 
 #### Utilizando STRATEGY para resolver a situação
 Podemos criar uma classe separada para cada template de email. 
@@ -121,19 +121,50 @@ o colocamos em uma classe, assim, invés de ter vários condicionais para verifi
 seria acionado, nós já recebemos o objeto dele, que é compreendido pela nossa função.
 
 ####### TODO Contar mais especificamente sobre as classes estratégias
+O strategy em si solicita que, você crie uma **classe contexto** que irá receber sua **classe
+estratégia** como parâmetro, e independente de qual essa seja, o contexto deverá conseguir
+executar a função "estretégia".
+
+Como por exemplo, uma classe de envio de email(**contexto**) e as classes de templates de email
+(**estratégia**) que contem uma função de "pegar dados do template". 
 
 ## Como ajudou
 Como podemos ver, o padrão Strategy pode nos ajudar muito a fazer com que o nosso código fique mais
 seguro e flexível somente extraindo parametros em classes do mesmo tipo, e fazendo com que o nosso
 "enviador de emails" compreenda objetos somente daquele tipo.
 
-Além disso, ganhamos em manutenabilidade, aonde se precisamos atualizar o template de email para
-alguma versão mais nova, alteramos somente a classe deste, sem precisar mexer na função principal.
+Assim, fazemos com que nossos objetos tenham uma função que retorna os dados a serem utilizados
+para o envio do email, permitindo tambem que cada uma retorne os dados específicos para cada caso.
+
+Com isso, ganhamos em manutenabilidade, aonde se precisamos atualizar a classe template
+de email para alguma versão mais nova, alteramos somente a classe deste, sem precisar mexer 
+na função principal.
 
 # Conclusão
 É claro que foi uma utlização bem simples para este caso, aonde somente o que diferencia cada template
 é somente o nome dele.
 
-####### TODO Colocar caso atual
- 
-####### TODO Revisar texto
+## Caso real
+Na empresa que trabalho hoje, contatamos nosso cliente via email em **diversas** situações 
+utilizando a API do Mandrill.
+
+Em cada situação que tinhamos que enviar o email, nós implementávamos **todos os passos** para 
+o envio do email:
+- Pegar o nome do template
+- Buscar os dados do cliente
+- Construção do dict para o envio
+- Check se o serviço do Mandrill estava online
+- Envio do email
+
+Quando tinhamos 10 templates... era... aceitável ~~nem tanto~~, mas seguimos assim.
+
+Entretanto, após um tempo tinhas 40 templates, e cada vez mais a esteira se complicoi e sempre
+era um parto pra fazer qualquer mudança em relação a email.
+
+A solução foi fazer algo semelhante a este exemplo, onde temos uma classe principal
+de envio de email (**contexto**), que dentro dela chama algumas funções que retornam os 
+dados para envio do email (template, dados formatados, lista de emails) que são extraídos
+de uma classe de template de email(**estratégia**).
+
+Agora, a implementação de novos templates é super simples, e a classe de envio de email
+em si nunca mais foi editada.

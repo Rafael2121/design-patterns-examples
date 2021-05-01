@@ -1,5 +1,3 @@
-# TODO aplicar interface
-
 # lib externa de envio de email
 class EmailService:
 
@@ -7,26 +5,38 @@ class EmailService:
         print(f"Email {template_name} enviado com sucesso!")
 
 
-## Objetos de email
-class Email1:
+class EmailTemplate:
+
+    template_name = None
+
+    def retrieve_email_data(self):
+        return self.template_name
+
+# --- Objetos de email
+
+
+class Email1(EmailTemplate):
     template_name = "EMAILCONDICAO1"
 
-class Email2:
+
+class Email2(EmailTemplate):
     template_name = "EMAILCONDICAO2"
 
-class Email3:
+
+class Email3(EmailTemplate):
     template_name = "EMAILCONDICAO3"
 
 
 ## Função de envio de email
-def send_email_to_client(template):
+def send_email_to_client(template_obj: EmailTemplate):
     email_service = EmailService()
 
-    template_name = template.template_name
+    template_name = template_obj.retrieve_email_data()
 
     email_service.send_email_template(template_name=template_name)
 
 
-template = Email1()  # Pode ser EMAIL2 ou EMAIL3
+template_list = [Email1(), Email3()]
 
-send_email_to_client(template)
+for template_obj in template_list:
+    send_email_to_client(template_obj)
